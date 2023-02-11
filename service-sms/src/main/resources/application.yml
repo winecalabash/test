@@ -1,0 +1,67 @@
+server:
+  port: 8120 #服务端口
+
+spring:
+  profiles:
+    active: dev #当前环境
+  application:
+    name: service-sms #微服务名称
+  #spring:
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    #    password: 123456 #默认为空
+    timeout: 3000ms #最大等待时间，超时则抛出异常，否则请求一直等待
+    lettuce:
+      pool:
+        max-active: 20  #最大连接数，负值表示没有限制，默认8
+        max-wait: -1    #最大阻塞等待时间，负值表示没限制，默认-1
+        max-idle: 8     #最大空闲连接，默认8
+        min-idle: 0     #最小空闲连接，默认0
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # nacos服务地址'
+
+#短信配置容联云
+#rckj:
+#  accountSid: 8aaf0708842397dd018489c3dfdf270b #自己的accountSId
+#  accountToken: 09c8df77ac024c7fb3b1f8fc120de05a #自己的accountToken
+#  appId: 8aaf0708842397dd018489c3e0d12712 #自己的appId
+#  serverIp: app.cloopen.com  #默认都是这个
+#  serverPort: 8883  #默认都是这个
+rckj:
+  account-sid: 8aaf0708842397dd018489c3dfdf270b
+  account-token: 09c8df77ac024c7fb3b1f8fc120de05a
+  app-id: 8aaf0708842397dd018489c3e0d12712
+  server-ip: app.cloopen.com
+  server-port: 8883
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000 #连接超时配置
+        readTimeout: 600000 #执行超时配置
+logging:
+  level:
+    com.atguigu.srb.sms.client.CoreUserInfoClient: DEBUG #以什么级别监控哪个接口
+
+  #开启Feign对Sentinel的支持
+  #feign:
+  sentinel:
+    enabled: true
+
+#  用户登录名称 18398462648@1736968753562344.onaliyun.com
+#  AccessKey ID LTAI5t9oqUCu4494efC2XH52
+#  AccessKey Secret I7lbw7H31erjzIQlz1Xl9DoAH2RTlO
+
+#阿里云短信
+#aliyun:
+#  sms:
+#    region-id: cn-hangzhou
+#    key-id: 你的keyid
+#    key-secret: 你的keysecret
+#    template-code: 你的短信模板code
+#    sign-name: 你的短信模板签名
